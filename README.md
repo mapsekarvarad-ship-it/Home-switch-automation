@@ -1,9 +1,18 @@
-# ESP32-S3 Home Control
+# ESP32-S3 WiFi Home Control
 
-A WiFi controller for four relays built on an ESP32-S3 DevKitC-1. The board serves a phone-friendly
-web page (with voice and typed commands) that switches a **Bell**, a **Fan** and two spare switches.
+A small, cloud-free controller for four relays. An ESP32-S3 DevKitC-1 runs a web server, and a phone opens
+the control page in its browser, with no app to install.
+
+- Four tiles with animated icons: **Bell** (rings for a fixed 1.5 seconds, then switches itself off), **Fan**, and two spare switches.
+- **Voice and typed commands**, such as "bell", "fan on" or "everything off".
+- **Works anywhere:** the board creates its own WiFi network (`HomeControl`, page at `192.168.4.1`), and it also joins your home or college WiFi automatically.
+- Everything runs on the board: no cloud service, no external files.
+- Built with PlatformIO and the Arduino framework. The full firmware is one file (`src/main.cpp`), and the repo includes a wiring guide and a project report.
 
 Full write-up: see `Project_Report.pdf` in this folder.
+
+> **Safety:** wire mains loads only through the relay's COM and NO terminals, in an insulated enclosure, with the power off.
+> The page has no login, so anyone on the same network can use it.
 
 ## Folder contents
 
