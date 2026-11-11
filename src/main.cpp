@@ -9,13 +9,17 @@ const char* AP_PASS = "homecontrol123";
 
 // The board also joins the first of these WiFi networks (2.4 GHz, plain password only) that is in range.
 // Its IP is printed on the serial monitor, and on networks that support it the page is at http://homecontrol.local
+// A network with a fixed address lists ip, gateway and subnet mask; a network with nullptr uses DHCP.
 struct KnownWifi {
   const char* ssid;
   const char* pass;
+  const char* ip;
+  const char* gateway;
+  const char* mask;
 };
 const KnownWifi KNOWN_WIFI[] = {
-  {"YOUR_WIFI_NAME", "YOUR_WIFI_PASSWORD"},
-  {"YOUR_SECOND_WIFI_NAME", "YOUR_SECOND_WIFI_PASSWORD"},
+  {"YOUR_WIFI_NAME", "YOUR_WIFI_PASSWORD", nullptr, nullptr, nullptr},
+  {"YOUR_SECOND_WIFI_NAME", "YOUR_SECOND_WIFI_PASSWORD", nullptr, nullptr, nullptr},
 };
 const int NUM_KNOWN_WIFI = sizeof(KNOWN_WIFI) / sizeof(KNOWN_WIFI[0]);
 
@@ -268,7 +272,14 @@ void maintainWifi() {
 
   Serial.println("Trying " + String(KNOWN_WIFI[next].ssid));
   WiFi.disconnect(false);
-  WiFi.begin(KNOWN_WIFI[next].ssid, KNOWN_WIFI[next].pass);
+  const KnownWifi& net = KNOWN_WIFI[next];
+  IPAddress ip, gateway, mask;
+  if (net.ip && ip.fromString(net.ip) && gateway.fromString(net.gateway) && mask.fromString(net.mask)) {
+    WiFi.config(ip, gateway, mask, gateway);             // fixed address (DNS via the router)
+  } else {
+    WiFi.config(IPAddress(), IPAddress(), IPAddress());  // back to DHCP
+  }
+  WiFi.begin(net.ssid, net.pass);
   next = (next + 1) % NUM_KNOWN_WIFI;
 }
 

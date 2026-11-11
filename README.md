@@ -109,3 +109,8 @@ dictation key in the "Type a command" box instead. Typed commands always work.
 - There is no password on the control page. Anyone on the same network who knows the board's address can use it.
 - It works only on the local network. Control from outside needs an internet service, which is not part of this project.
 - The board's WiFi reception is weak at a distance, so keep it close to the router.
+
+## Author
+
+**Varad Uday Mapsekar**
+Roll number: 25EEE1048
