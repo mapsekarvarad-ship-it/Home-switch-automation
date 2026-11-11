@@ -1,0 +1,9 @@
+﻿# PlatformIO build output and editor files
+.pio/
+.vscode/
+*.o
+*.elf
+*.bin
+
+# Local copies that may hold real WiFi passwords
+src/secrets.h
